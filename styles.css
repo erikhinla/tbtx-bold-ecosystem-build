@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  /* Core Swiss Industrial Palette */
+  --bg-color: #F4F4F0;
+  --text-primary: #050505;
+  --accent-red: #E61919;
+  
+  /* Brand Variations to be overridden in individual sheets if necessary, 
+     but keeping the base Swiss Industrial Print for all as instructed. */
+  --surface-color: #EAE8E3;
+  --grid-line: #050505; /* Black grid lines */
+  --spacing-unit: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important; /* NO ROUNDED FLUFF */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Mechanical Grain SVG Overlay (Data URI) */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* TYPOGRAPHY */
+h1, .macro-type {
+  font-family: 'Archivo Black', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  font-size: clamp(3rem, 8vw, 10rem);
+  margin-bottom: var(--spacing-unit);
+  color: var(--text-primary);
+}
+
+h2 {
+  font-family: 'Archivo Black', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-size: clamp(2rem, 5vw, 5rem);
+  margin-bottom: var(--spacing-unit);
+  border-bottom: 2px solid var(--grid-line);
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  max-width: 65ch;
+  margin-bottom: 1.5rem;
+}
+
+.mono, .metadata, .tag, button, input {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+/* GRID & LAYOUT (Compartmentalization) */
+.blueprint-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+  background-color: var(--grid-line); /* This creates the 1px hard lines */
+  border: 1px solid var(--grid-line);
+  margin-bottom: 2rem;
+}
+
+.blueprint-grid > * {
+  background-color: var(--bg-color); /* Restores background for cells */
+  padding: 1.5rem;
+}
+
+section {
+  padding: 4rem 2rem;
+  border-bottom: 2px solid var(--grid-line);
+  position: relative;
+}
+
+/* UI COMPONENTS */
+button, .btn {
+  display: inline-block;
+  background-color: var(--text-primary);
+  color: var(--bg-color);
+  border: none;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.1s;
+}
+
+button:hover, .btn:hover {
+  background-color: var(--accent-red);
+  color: var(--bg-color);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--text-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-color);
+  border-color: var(--text-primary);
+}
+
+.accent-text {
+  color: var(--accent-red);
+}
+
+/* DECORATIVE TERMINAL ELEMENTS */
+.ascii-frame::before {
+  content: "[ ";
+  color: var(--accent-red);
+}
+.ascii-frame::after {
+  content: " ]";
+  color: var(--accent-red);
+}
+
+header {
+  border-bottom: 2px solid var(--grid-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+}
+
+nav a:hover, nav a.active {
+  color: var(--accent-red);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* WIDGET STYLES */
+.diagnostic-panel {
+  border: 2px solid var(--grid-line);
+  padding: 2rem;
+  position: relative;
+  background-color: var(--surface-color);
+}
+
+.diagnostic-panel::before {
+  content: "/// SYSTEM DIAGNOSTIC ///";
+  position: absolute;
+  top: -0.75rem;
+  left: 2rem;
+  background: var(--bg-color);
+  padding: 0 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: bold;
+  font-size: 0.75rem;
+  color: var(--accent-red);
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: var(--text-primary);
+  margin-right: 0.5rem;
+}
+.status-indicator.active {
+  background-color: var(--accent-red);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .blueprint-grid {
+    grid-template-columns: 1fr;
+  }
+  section {
+    padding: 2rem 1rem;
+  }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BizBot Marketing - AI Automation and Diagnostics">
+  <title>BizBot Marketing | Live Diagnosis Surface</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* LIVE DIAGNOSIS SURFACE (AVA) Specific Overrides */
+    body {
+      overflow-x: hidden;
+    }
+    .split-layout {
+      display: flex;
+      min-height: calc(100vh - 75px);
+    }
+    .left-panel {
+      flex: 1;
+      border-right: 2px solid var(--grid-line);
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .right-panel {
+      flex: 1;
+      padding: 4rem 2rem;
+      background-color: var(--surface-color);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .terminal-output {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+    
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--grid-line);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .diag-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 2px solid var(--grid-line);
+      color: var(--text-primary);
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    
+    .diag-option:hover {
+      background: var(--text-primary);
+      color: var(--bg-color);
+    }
+    
+    .ava-msg {
+      padding: 1rem;
+      border-left: 4px solid var(--accent-red);
+      background-color: rgba(230, 25, 25, 0.05);
+      margin-bottom: 1rem;
+    }
+    
+    /* Simple JS State toggles for prototyping */
+    .state-mid, .state-final { display: none; }
+    
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo mono ascii-frame">BBM / AVA-ENGINE</div>
+    <nav>
+      <a href="../transformby10x/index.html">TransformBy10X</a>
+      <a href="../bizbuilders/index.html">BizBuilders AI</a>
+      <a href="../bizbotmarketing/index.html" class="active">BizBot Marketing</a>
+    </nav>
+  </header>
+
+  <main class="split-layout">
+    <!-- LEFT SIDE (Persistent) -->
+    <div class="left-panel">
+      <h1 class="macro-type" style="font-size: clamp(3rem, 6vw, 6rem);">Your work<br>isn't slow</h1>
+      <h1 class="macro-type accent-text" style="font-size: clamp(3rem, 6vw, 6rem);">Your system<br>is unclear</h1>
+      <p class="mono mt-2" style="font-size: 1.25rem;">>>> That's digital fog.</p>
+    </div>
+
+    <!-- RIGHT PANEL (Interactive Diagnostic) -->
+    <div class="right-panel">
+      
+      <!-- STATUS HEADER -->
+      <div class="terminal-output">
+        <div class="status-row">
+          <span>SYSTEM STATUS:</span> <span id="val-status">--</span>
+        </div>
+        <div class="status-row">
+          <span>CLARITY:</span> <span id="val-clarity">--</span>
+        </div>
+        <div class="status-row">
+          <span>BLUEPRINT:</span> <span id="val-blueprint">--</span>
+        </div>
+      </div>
+
+      <!-- STATE INITIAL -->
+      <div id="state-initial">
+        <h3 class="mono">[ Q1 ] Where does work slow down most?</h3>
+        <button class="diag-option" onclick="advanceToMid()">Starting</button>
+        <button class="diag-option" onclick="advanceToMid()">Switching tools</button>
+        <button class="diag-option" onclick="advanceToMid()">Waiting on others</button>
+        <button class="diag-option" onclick="advanceToMid()">Finishing</button>
+      </div>
+
+      <!-- STATE MIDWAY -->
+      <div id="state-mid" class="state-mid">
+        <div class="ava-msg terminal-output">
+          <strong>AVA:</strong> This is usually where the system breaks first.<br><br>
+          You're not overloaded. Your workflow is disconnected.
+        </div>
+        <button class="btn" style="width: 100%;" onclick="advanceToFinal()">Continue Scan_</button>
+      </div>
+      
+      <!-- STATE FINAL -->
+      <div id="state-final" class="state-final">
+        <div class="ava-msg terminal-output" style="border-color: var(--text-primary); background-color: rgba(5,5,5,0.05);">
+          <strong>AVA:</strong> I have enough to map this.<br><br>
+          Let's build your blueprint.
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+          <h2 class="system-reveal" style="font-size: 2rem; border:none; margin-bottom:0.5rem;">Open your AI Blueprint</h2>
+          <p class="mono" style="margin-bottom: 2rem;">[ See what to fix first and how to implement it ]</p>
+          <a href="#" class="btn" style="width: 100%;">GENERATE BLUEPRINT</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function advanceToMid() {
+      document.getElementById('state-initial').style.display = 'none';
+      document.getElementById('state-mid').style.display = 'block';
+      
+      document.getElementById('val-status').innerText = 'FRAGMENTED';
+      document.getElementById('val-clarity').innerHTML = '48% <span class="accent-text">(GAP FORMING)</span>';
+    }
+
+    function advanceToFinal() {
+      document.getElementById('state-mid').style.display = 'none';
+      document.getElementById('state-final').style.display = 'block';
+      
+      document.getElementById('val-status').innerText = 'TOOL OVERLOAD';
+      document.getElementById('val-clarity').innerText = '100%';
+      document.getElementById('val-blueprint').innerHTML = '<span class="accent-text">READY</span>';
+    }
+  </script>
+</body>
+</html>
