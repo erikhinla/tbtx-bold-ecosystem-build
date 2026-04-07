@@ -7,32 +7,106 @@
   <title>BizBuilders AI | System Infrastructure</title>
   <link rel="stylesheet" href="../styles.css">
   <style>
-    /* TYPE DOMINANT / SYSTEM REVEAL Specific Overrides */
-    .system-reveal {
-      font-size: clamp(2.5rem, 5vw, 5rem);
-      line-height: 1;
-    }
-    .grid-reveal {
+    /* TYPE DOMINANT / SYSTEM REVEAL / BBAI OVERRIDES */
+    body {
+      background-color: #FAFAFA; /* Whiter starker background for BBAI */
       background-image: 
-        linear-gradient(to right, rgba(5,5,5,0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(5,5,5,0.05) 1px, transparent 1px);
-      background-size: 2rem 2rem;
+        linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      position: relative;
     }
-    .subline {
+    header {
+      background: var(--text-primary);
+      color: var(--bg-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 4px solid var(--text-primary);
+    }
+    header nav a {
+      color: #FFF;
+      border: 1px solid transparent;
+      padding: 0.25rem 0.5rem;
+    }
+    header nav a.active {
+      border-color: #FFF;
+      color: #FFF;
+      text-decoration: none;
+    }
+    .system-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(100px, auto);
+      gap: 2px;
+      background: var(--text-primary);
+      border: 2px solid var(--text-primary);
+      margin: 4rem 2rem;
+    }
+    .system-cell {
+      background: #FAFAFA;
+      padding: 3rem;
+      position: relative;
+    }
+    .cell-meta {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 0.25rem 0.5rem;
       font-family: 'JetBrains Mono', monospace;
-      text-transform: uppercase;
+      font-size: 0.7rem;
+      border-bottom: 2px solid var(--text-primary);
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-primary);
       letter-spacing: 0.05em;
-      color: var(--accent-red);
-      font-size: 0.875rem;
+    }
+    .cell-joint {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: var(--accent-red);
+      z-index: 10;
+    }
+    .joint-tl { top: -8px; left: -8px; }
+    .joint-tr { top: -8px; right: -8px; }
+    
+    .sys-type {
+      font-family: 'Archivo Black', sans-serif;
+      text-transform: uppercase;
+      line-height: 0.9;
+      font-size: clamp(3rem, 6vw, 6rem);
       margin-top: 1rem;
+    }
+    .sys-sub {
+      font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
+      color: var(--accent-red);
+      border: 1px solid var(--accent-red);
+      padding: 0.5rem 1rem;
+      display: inline-block;
+      margin-top: 2rem;
+      text-transform: uppercase;
+    }
+    
+    .dense-matrix {
+      background: var(--text-primary);
+      color: #fff;
+    }
+    
+    .cta-cell {
+      background: var(--accent-red);
+      color: #FFF;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .cta-cell:hover {
+      opacity: 0.8;
     }
   </style>
 </head>
-<body class="grid-reveal">
+<body>
 
   <header>
-    <div class="logo mono ascii-frame">BBAI / INFRA</div>
+    <div class="logo mono ascii-frame" style="color: #FFF;">BBAI_SYS // 001</div>
     <nav>
       <a href="../transformby10x/index.html">TransformBy10X</a>
       <a href="../bizbuilders/index.html" class="active">BizBuilders AI</a>
@@ -41,66 +115,73 @@
   </header>
 
   <main>
-    <!-- SECTION 1 -->
-    <section>
-      <div class="blueprint-grid">
-        <div style="grid-column: span 12; padding: 4rem 2rem;">
-          <h1 class="macro-type">Digital fog<br>is when work starts<br><span class="accent-text">and doesn't move</span></h1>
-          <p class="subline">>>> Too many tools. No system connecting them.</p>
+    <div class="system-grid">
+      
+      <!-- SEC 1: 12 Cols -->
+      <div class="system-cell" style="grid-column: span 12;">
+        <div class="cell-joint joint-tl"></div>
+        <div class="cell-meta"><span>SEC_100</span><span>DIAGNOSTIC_STATE</span></div>
+        <h1 class="sys-type" style="font-size: clamp(4rem, 8vw, 10vw); margin-top: 1rem;">DIGITAL FOG<br>IS WHEN WORK STARTS<br><span style="color: var(--text-primary); -webkit-text-stroke: 2px var(--text-primary); color: transparent;">AND DOESN'T MOVE</span></h1>
+        <div class="sys-sub">>>> TOO MANY TOOLS. NO SYSTEM CONNECTING THEM.</div>
+      </div>
+
+      <!-- SEC 2: 6 Cols -->
+      <div class="system-cell" style="grid-column: span 6;">
+        <div class="cell-meta"><span>SEC_200</span><span>ASSERTION_A</span></div>
+        <h2 class="sys-type">THIS ISN'T A TOOL PROBLEM.</h2>
+      </div>
+
+      <!-- SEC 2B: 6 Cols -->
+      <div class="system-cell dense-matrix" style="grid-column: span 6;">
+        <div class="cell-joint joint-tr"></div>
+        <div class="cell-meta" style="border-color: #444; color: #AAA;"><span>SEC_201</span><span>ASSERTION_B</span></div>
+        <h2 class="sys-type" style="color: var(--accent-red);">IT'S A SYSTEM PROBLEM.</h2>
+      </div>
+
+      <!-- SEC 3: 4 Cols -->
+      <div class="system-cell" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between;">
+        <div class="cell-meta"><span>SEC_300</span><span>MISSING_LAYER</span></div>
+        <h2 class="sys-type">THE MISSING LAYER IS STRUCTURE.</h2>
+        <div class="sys-sub" style="font-size: 0.75rem; border-color: var(--text-primary); color: var(--text-primary);">[ HOW WORK FLOWS. WHERE IT BREAKS. WHAT CONNECTS. ]</div>
+      </div>
+
+      <!-- SEC 4: 7 Cols -->
+      <div class="system-cell" style="grid-column: span 7;">
+        <div class="cell-meta" style="background: var(--text-primary); color: #fff;"><span>SEC_400</span><span>SOLUTION_ARCH</span></div>
+        <div style="border: 4px solid var(--text-primary); padding: 3rem; margin-top: 2rem;">
+          <h2 class="sys-type" style="margin: 0;">THE AI BLUEPRINT MAKES THE SYSTEM VISIBLE.</h2>
+          <div style="margin-top: 2rem; font-family: 'JetBrains Mono'; font-weight: bold; background: var(--accent-red); color: #fff; padding: 1rem; display: inline-block;">
+             YOUR GAP. YOUR BOTTLENECK. YOUR NEXT MOVE.
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- SECTION 2 -->
-    <section>
-      <h2 class="system-reveal">This isn't a tool problem.<br>It's a system problem.</h2>
-    </section>
-
-    <!-- SECTION 3 -->
-    <section>
-      <div class="blueprint-grid">
-        <div style="grid-column: span 12;">
-          <h2 class="system-reveal">The missing layer<br>is structure.</h2>
-          <p class="subline">/// How work flows. Where it breaks. What connects.</p>
-        </div>
+      <!-- SEC 5 & 6 & 7: Grid nested -->
+      <div class="system-cell" style="grid-column: span 4;">
+        <div class="cell-joint joint-tl" style="background: var(--text-primary);"></div>
+        <div class="cell-meta"><span>SEC_500</span><span>DELIVERABLE</span></div>
+        <h2 class="sys-type" style="font-size: 3rem;">YOU DON'T GET MORE INFO.<br>YOU GET DIRECTION.</h2>
+        <p class="mono" style="margin-top: 2rem; font-weight: bold;">[ WHAT TO FIX FIRST. WHAT TO IGNORE. WHAT ACTUALLY MOVES THINGS FORWARD. ]</p>
       </div>
-    </section>
 
-    <!-- SECTION 4 -->
-    <section>
-      <div class="diagnostic-panel" style="margin-bottom: 2rem;">
-        <h2 class="system-reveal" style="border: none;">The AI Blueprint<br>makes the system visible.</h2>
-        <p class="subline">>>> Your gap. Your bottleneck. Your next move.</p>
+      <div class="system-cell dense-matrix" style="grid-column: span 4;">
+        <div class="cell-meta" style="border-color: #444; color: #AAA;"><span>SEC_600</span><span>IMPLEMENTATION</span></div>
+        <h2 class="sys-type" style="font-size: 3rem; color: #fff;">THEN WE BUILD IT WITH YOU.</h2>
+        <p class="mono" style="margin-top: 2rem; font-weight: bold; color: var(--accent-red);">[ WORKFLOWS. SYSTEMS. AI THAT FITS HOW YOU ACTUALLY OPERATE. ]</p>
       </div>
-    </section>
 
-    <!-- SECTION 5 -->
-    <section>
-      <h2 class="system-reveal">You don't get more information.<br>You get direction.</h2>
-      <p class="subline">/// What to fix first. What to ignore. What actually moves things forward.</p>
-    </section>
+      <a href="#blueprint" class="system-cell cta-cell" style="grid-column: span 4; text-decoration: none; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <div class="cell-meta" style="border-color: #fff; color: #fff;"><span>SEC_700</span><span>EXECUTE</span></div>
+        <h2 class="sys-type" style="font-size: 3rem;">START WITH THE BLUEPRINT</h2>
+        <p class="mono" style="margin-top: 2rem; font-weight: bold; padding: 1rem; border: 2px solid #fff;">[ FIND THE GAP BEFORE YOU TRY TO FIX IT ]</p>
+      </a>
 
-    <!-- SECTION 6 -->
-    <section>
-      <div class="blueprint-grid">
-        <div style="grid-column: span 12; background-color: var(--text-primary); color: var(--bg-color);">
-          <h2 class="system-reveal" style="border-color: var(--bg-color); color: var(--bg-color);">Then we build it with you.</h2>
-          <p class="subline" style="color: var(--accent-red);">[ Workflows. Systems. AI that fits how you actually operate. ]</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 7 (CTA) -->
-    <section style="text-align: center; padding: 6rem 2rem;">
-      <h2 class="macro-type">Start with the blueprint</h2>
-      <p class="subline" style="margin-bottom: 2rem; justify-content: center;">[ Find the gap before you try to fix it ]</p>
-      <a href="#blueprint" class="btn">ACCESS BLUEPRINT_</a>
-    </section>
+    </div>
   </main>
 
-  <footer style="padding: 2rem; border-top: 2px solid var(--grid-line); display:flex; justify-content: space-between;">
-    <span class="mono">© 2026 BIZBUILDERS AI</span>
-    <span class="mono accent-text">INFRASTRUCTURE PRECEDES EXECUTION</span>
+  <footer style="padding: 2rem 3rem; background: var(--text-primary); color: #fff; display:flex; justify-content: space-between; align-items: center;">
+    <span class="mono">STATUS: SYSTEMS ONLINE // © 2026</span>
+    <span class="mono" style="padding: 0.5rem 1rem; background: var(--accent-red); font-weight: bold;">INFRASTRUCTURE PRECEDES EXECUTION</span>
   </footer>
 
 </body>

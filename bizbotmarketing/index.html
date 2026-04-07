@@ -7,43 +7,73 @@
   <title>BizBot Marketing | Live Diagnosis Surface</title>
   <link rel="stylesheet" href="../styles.css">
   <style>
-    /* LIVE DIAGNOSIS SURFACE (AVA) Specific Overrides */
+    /* LIVE DIAGNOSIS SURFACE / EXTREME BBM OVERRIDES */
     body {
-      overflow-x: hidden;
+      background-color: var(--bg-color);
+      overflow: hidden; /* Lock the viewport */
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      border-bottom: 2px solid var(--text-primary);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      flex-shrink: 0;
     }
     .split-layout {
       display: flex;
-      min-height: calc(100vh - 75px);
+      flex: 1;
+      height: 100%;
     }
     .left-panel {
       flex: 1;
-      border-right: 2px solid var(--grid-line);
-      padding: 4rem 2rem;
+      padding: 4rem 3rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      position: relative;
+    }
+    .left-panel::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0; right: 0;
+      width: 4px;
+      background-color: var(--text-primary);
     }
     .right-panel {
       flex: 1;
-      padding: 4rem 2rem;
-      background-color: var(--surface-color);
+      background-color: var(--text-primary);
+      color: var(--bg-color);
+      padding: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      position: relative;
+      overflow-y: auto;
     }
     
-    .terminal-output {
+    .bbm-macro {
+      font-family: 'Archivo Black', sans-serif;
+      text-transform: uppercase;
+      font-size: clamp(4rem, 8vw, 8vw);
+      line-height: 0.85;
+      letter-spacing: -0.05em;
+      margin-bottom: 2rem;
+    }
+    
+    .sys-terminal-header {
+      border-bottom: 2px solid var(--bg-color);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.875rem;
-      line-height: 1.5;
-    }
-    
-    .status-row {
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid var(--grid-line);
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.5rem;
+    }
+
+    .terminal-val {
+      color: var(--accent-red);
     }
     
     .diag-option {
@@ -51,37 +81,78 @@
       width: 100%;
       text-align: left;
       background: transparent;
-      border: 2px solid var(--grid-line);
-      color: var(--text-primary);
-      padding: 1rem;
-      margin-bottom: 0.5rem;
-      font-family: 'Inter', sans-serif;
-      font-weight: bold;
+      border: 2px solid var(--bg-color);
+      color: var(--bg-color);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.5rem;
       text-transform: uppercase;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.1s;
     }
-    
+    .diag-option::before {
+      content: attr(data-index);
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'JetBrains Mono';
+      font-size: 1rem;
+      opacity: 0.5;
+    }
     .diag-option:hover {
-      background: var(--text-primary);
-      color: var(--bg-color);
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+
+    .ava-output {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.125rem;
+      line-height: 1.6;
+      border-left: 6px solid var(--accent-red);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
     }
     
-    .ava-msg {
-      padding: 1rem;
-      border-left: 4px solid var(--accent-red);
-      background-color: rgba(230, 25, 25, 0.05);
-      margin-bottom: 1rem;
+    .flash-overlay {
+      position: absolute; top:0; left:0; right:0; bottom:0;
+      background: var(--bg-color);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s;
     }
-    
-    /* Simple JS State toggles for prototyping */
+    .is-flashing {
+      opacity: 1;
+    }
+
+    .btn-terminal {
+      background: var(--accent-red);
+      color: #fff;
+      border: none;
+      padding: 1.5rem;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 2rem;
+      width: 100%;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-top: auto;
+    }
+    .btn-terminal:hover {
+      background: #fff;
+      color: var(--accent-red);
+    }
+
     .state-mid, .state-final { display: none; }
-    
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo mono ascii-frame">BBM / AVA-ENGINE</div>
+    <div class="logo mono ascii-frame">BBM_OS // LIVE DIAGNOSTIC</div>
     <nav>
       <a href="../transformby10x/index.html">TransformBy10X</a>
       <a href="../bizbuilders/index.html">BizBuilders AI</a>
@@ -92,77 +163,83 @@
   <main class="split-layout">
     <!-- LEFT SIDE (Persistent) -->
     <div class="left-panel">
-      <h1 class="macro-type" style="font-size: clamp(3rem, 6vw, 6rem);">Your work<br>isn't slow</h1>
-      <h1 class="macro-type accent-text" style="font-size: clamp(3rem, 6vw, 6rem);">Your system<br>is unclear</h1>
-      <p class="mono mt-2" style="font-size: 1.25rem;">>>> That's digital fog.</p>
+      <h1 class="bbm-macro">YOUR WORK<br>ISN'T SLOW</h1>
+      <h1 class="bbm-macro" style="-webkit-text-stroke: 2px var(--text-primary); color: transparent;">YOUR SYSTEM<br>IS UNCLEAR</h1>
+      <div class="mono" style="font-size: 1.5rem; padding: 1rem; background: var(--text-primary); color: var(--bg-color); display: inline-block; align-self: flex-start; margin-top: 2rem;">
+        >>> THAT'S DIGITAL FOG.
+      </div>
     </div>
 
     <!-- RIGHT PANEL (Interactive Diagnostic) -->
-    <div class="right-panel">
+    <div class="right-panel" id="terminal-screen">
+      <div class="flash-overlay" id="flash"></div>
       
-      <!-- STATUS HEADER -->
-      <div class="terminal-output">
-        <div class="status-row">
-          <span>SYSTEM STATUS:</span> <span id="val-status">--</span>
-        </div>
-        <div class="status-row">
-          <span>CLARITY:</span> <span id="val-clarity">--</span>
-        </div>
-        <div class="status-row">
-          <span>BLUEPRINT:</span> <span id="val-blueprint">--</span>
-        </div>
+      <div class="sys-terminal-header">
+        <div>SYS_STATUS: <span id="val-status" class="terminal-val">AWAITING_INPUT</span></div>
+        <div>CLARITY: <span id="val-clarity" class="terminal-val">0%</span></div>
+        <div>BLUEPRINT: <span id="val-blueprint" class="terminal-val">OFFLINE</span></div>
       </div>
 
       <!-- STATE INITIAL -->
       <div id="state-initial">
-        <h3 class="mono">[ Q1 ] Where does work slow down most?</h3>
-        <button class="diag-option" onclick="advanceToMid()">Starting</button>
-        <button class="diag-option" onclick="advanceToMid()">Switching tools</button>
-        <button class="diag-option" onclick="advanceToMid()">Waiting on others</button>
-        <button class="diag-option" onclick="advanceToMid()">Finishing</button>
+        <h3 class="mono" style="margin-bottom: 2rem; font-size: 1.25rem;">[ INPUT REQUIRED: WHERE DOES WORK SLOW DOWN MOST? ]</h3>
+        <button class="diag-option" data-index="01" onclick="triggerFlash(advanceToMid)">STARTING</button>
+        <button class="diag-option" data-index="02" onclick="triggerFlash(advanceToMid)">SWITCHING TOOLS</button>
+        <button class="diag-option" data-index="03" onclick="triggerFlash(advanceToMid)">WAITING ON OTHERS</button>
+        <button class="diag-option" data-index="04" onclick="triggerFlash(advanceToMid)">FINISHING</button>
       </div>
 
       <!-- STATE MIDWAY -->
       <div id="state-mid" class="state-mid">
-        <div class="ava-msg terminal-output">
-          <strong>AVA:</strong> This is usually where the system breaks first.<br><br>
-          You're not overloaded. Your workflow is disconnected.
+        <div class="ava-output">
+          <strong>AVA_ENGINE:</strong> THIS IS USUALLY WHERE THE SYSTEM BREAKS FIRST.<br><br>
+          <span style="color: var(--accent-red); font-weight: bold;">YOU'RE NOT OVERLOADED. YOUR WORKFLOW IS DISCONNECTED.</span>
         </div>
-        <button class="btn" style="width: 100%;" onclick="advanceToFinal()">Continue Scan_</button>
+        <button class="btn-terminal" onclick="triggerFlash(advanceToFinal)">> CONTINUE SCAN</button>
       </div>
       
       <!-- STATE FINAL -->
       <div id="state-final" class="state-final">
-        <div class="ava-msg terminal-output" style="border-color: var(--text-primary); background-color: rgba(5,5,5,0.05);">
-          <strong>AVA:</strong> I have enough to map this.<br><br>
-          Let's build your blueprint.
+        <div class="ava-output" style="border-color: #fff;">
+          <strong>AVA_ENGINE:</strong> I HAVE ENOUGH DATA TO MAP THIS ENVIRONMENT.<br><br>
+          LET'S BUILD YOUR BLUEPRINT.
         </div>
-        <div style="text-align: center; margin-top: 3rem;">
-          <h2 class="system-reveal" style="font-size: 2rem; border:none; margin-bottom:0.5rem;">Open your AI Blueprint</h2>
-          <p class="mono" style="margin-bottom: 2rem;">[ See what to fix first and how to implement it ]</p>
-          <a href="#" class="btn" style="width: 100%;">GENERATE BLUEPRINT</a>
-        </div>
+        <h3 class="mono" style="margin-top: 4rem; text-align: center;">[ SEE WHAT TO FIX FIRST AND HOW TO IMPLEMENT IT ]</h3>
+        <button class="btn-terminal" style="background: #fff; color: var(--text-primary);">> OPEN AI BLUEPRINT</button>
       </div>
 
     </div>
   </main>
 
   <script>
+    function triggerFlash(callback) {
+      const flash = document.getElementById('flash');
+      flash.classList.add('is-flashing');
+      setTimeout(() => {
+        callback();
+        flash.classList.remove('is-flashing');
+      }, 150);
+    }
+
     function advanceToMid() {
       document.getElementById('state-initial').style.display = 'none';
-      document.getElementById('state-mid').style.display = 'block';
+      document.getElementById('state-mid').style.display = 'flex';
+      document.getElementById('state-mid').style.flexDirection = 'column';
+      document.getElementById('state-mid').style.height = '100%';
       
-      document.getElementById('val-status').innerText = 'FRAGMENTED';
-      document.getElementById('val-clarity').innerHTML = '48% <span class="accent-text">(GAP FORMING)</span>';
+      document.getElementById('val-status').innerHTML = '<span style="color:red">FRAGMENTED</span>';
+      document.getElementById('val-clarity').innerHTML = '48% <span style="font-size:0.75rem">(GAP FORMING)</span>';
     }
 
     function advanceToFinal() {
       document.getElementById('state-mid').style.display = 'none';
-      document.getElementById('state-final').style.display = 'block';
+      document.getElementById('state-final').style.display = 'flex';
+      document.getElementById('state-final').style.flexDirection = 'column';
+      document.getElementById('state-final').style.height = '100%';
       
-      document.getElementById('val-status').innerText = 'TOOL OVERLOAD';
+      document.getElementById('val-status').innerHTML = '<span style="color:red">TOOL OVERLOAD</span>';
       document.getElementById('val-clarity').innerText = '100%';
-      document.getElementById('val-blueprint').innerHTML = '<span class="accent-text">READY</span>';
+      document.getElementById('val-blueprint').innerHTML = '<span style="color:#fff; background:var(--accent-red); padding:0 4px;">READY</span>';
     }
   </script>
 </body>
