@@ -170,7 +170,7 @@
       </div>
     </div>
 
-    <!-- RIGHT PANEL (Interactive Diagnostic) -->
+    <!-- RIGHT PANEL (Interactive Diagnostic surface) -->
     <div class="right-panel" id="terminal-screen">
       <div class="flash-overlay" id="flash"></div>
       
@@ -180,38 +180,150 @@
         <div>BLUEPRINT: <span id="val-blueprint" class="terminal-val">OFFLINE</span></div>
       </div>
 
-      <!-- STATE INITIAL -->
-      <div id="state-initial">
-        <h3 class="mono" style="margin-bottom: 2rem; font-size: 1.25rem;">[ INPUT REQUIRED: WHERE DOES WORK SLOW DOWN MOST? ]</h3>
-        <button class="diag-option" data-index="01" onclick="triggerFlash(advanceToMid)">STARTING</button>
-        <button class="diag-option" data-index="02" onclick="triggerFlash(advanceToMid)">SWITCHING TOOLS</button>
-        <button class="diag-option" data-index="03" onclick="triggerFlash(advanceToMid)">WAITING ON OTHERS</button>
-        <button class="diag-option" data-index="04" onclick="triggerFlash(advanceToMid)">FINISHING</button>
+      <!-- DYNAMIC QUESTION CONTAINER -->
+      <div id="diagnostic-container" style="flex: 1; display: flex; flex-direction: column;">
+        <div id="question-header">
+          <h3 class="mono" id="q-topic-label" style="margin-bottom: 2rem; font-size: 1.25rem; color: var(--accent-red); opacity: 0.6;">[ INITIALIZING... ]</h3>
+          <h2 class="type-macro" id="q-text" style="font-size: clamp(2rem, 4vw, 4rem); line-height: 1; margin-bottom: 3rem;">Loading Diagnostic Engine...</h2>
+        </div>
+        
+        <div id="options-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <!-- Options injected here -->
+        </div>
+
+        <div id="ava-feedback" class="ava-output" style="display: none; margin-top: auto;">
+          <strong>AVA_ENGINE:</strong> <span id="ava-text"></span>
+        </div>
       </div>
 
-      <!-- STATE MIDWAY -->
-      <div id="state-mid" class="state-mid">
-        <div class="ava-output">
-          <strong>AVA_ENGINE:</strong> THIS IS USUALLY WHERE THE SYSTEM BREAKS FIRST.<br><br>
-          <span style="color: var(--accent-red); font-weight: bold;">YOU'RE NOT OVERLOADED. YOUR WORKFLOW IS DISCONNECTED.</span>
-        </div>
-        <button class="btn-terminal" onclick="triggerFlash(advanceToFinal)">> CONTINUE SCAN</button>
-      </div>
-      
-      <!-- STATE FINAL -->
-      <div id="state-final" class="state-final">
-        <div class="ava-output" style="border-color: #fff;">
+      <!-- FINAL STATE (Hidden by default) -->
+      <div id="state-final" style="display: none; flex-direction: column; height: 100%; justify-content: center; align-items: center; text-align: center;">
+        <div class="ava-output" style="border-color: #fff; text-align: left; width: 100%; margin-bottom: 4rem;">
           <strong>AVA_ENGINE:</strong> I HAVE ENOUGH DATA TO MAP THIS ENVIRONMENT.<br><br>
-          LET'S BUILD YOUR BLUEPRINT.
+          <span style="font-size: 1.5rem; color: #FFF;">COMPILE COMPLETE</span>
         </div>
-        <h3 class="mono" style="margin-top: 4rem; text-align: center;">[ SEE WHAT TO FIX FIRST AND HOW TO IMPLEMENT IT ]</h3>
-        <button class="btn-terminal" style="background: #fff; color: var(--text-primary);">> OPEN AI BLUEPRINT</button>
+        
+        <div style="margin-bottom: 4rem;">
+          <h2 class="bbm-macro" style="font-size: 3rem; margin-bottom: 1rem;">Your system is mapped.</h2>
+          <h2 class="bbm-macro" style="font-size: 3rem; margin-bottom: 1rem;">Your bottleneck is identified.</h2>
+          <h2 class="bbm-macro" style="font-size: 3rem;">Your blueprint is ready.</h2>
+        </div>
+
+        <div style="width: 100%; display: flex; flex-direction: column; gap: 1.5rem;">
+          <a href="../bizbuilders/index.html" class="btn-terminal" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #FFF; color: var(--text-primary);">
+            → BUILD THE SYSTEM
+          </a>
+          <a href="blueprint.html" id="view-blueprint-link" class="mono" style="color: #FFF; text-decoration: underline; font-size: 1.25rem; letter-spacing: 0.1em; padding: 1rem;">
+            View Blueprint
+          </a>
+        </div>
       </div>
 
     </div>
   </main>
 
   <script>
+    const intakeConfig = [
+      { id: "q1", topic: "progress slows", question: "Where does progress slow down most?", options: [
+        { label: "Starting", weights: { executionStall: 2, fragmentedWorkflow: 1 } },
+        { label: "Switching tools", weights: { toolOverload: 2, fragmentedWorkflow: 1 } },
+        { label: "Waiting on others", weights: { bottleneckOperator: 2, fragmentedWorkflow: 1 } },
+        { label: "Finishing", weights: { executionStall: 2 } }
+      ]},
+      { id: "q2", topic: "tool volume", question: "How many apps does it take to finish one task?", options: [
+        { label: "Just 1 or 2. Focused.", weights: { bottleneckOperator: 1 } },
+        { label: "3 to 4. Standard.", weights: { fragmentedWorkflow: 1 } },
+        { label: "5+. Jumping constants.", weights: { toolOverload: 3 } },
+        { label: "Unknown. Fragmentation.", weights: { fragmentedWorkflow: 2, toolOverload: 1 } }
+      ]},
+      { id: "q3", topic: "handoffs", question: "How often does work get handed off?", options: [
+        { label: "Rarely. End-to-end.", weights: { bottleneckOperator: 2 } },
+        { label: "Once for review.", weights: { executionStall: 1 } },
+        { label: "Constantly. Hot potato.", weights: { fragmentedWorkflow: 3 } },
+        { label: "Avoided. Fragile.", weights: { bottleneckOperator: 1, toolOverload: 1 } }
+      ]},
+      { id: "q4", topic: "source of truth", question: "Where does the truth live for a project?", options: [
+        { label: "Single tool of record.", weights: {} },
+        { label: "Spread across Slack/Docs.", weights: { fragmentedWorkflow: 2, toolOverload: 1 } },
+        { label: "In someone's head.", weights: { bottleneckOperator: 3 } },
+        { label: "SOP ignored.", weights: { executionStall: 2 } }
+      ]},
+      { id: "q5", topic: "owner dependency", question: "If you take a week off, what happens?", options: [
+        { label: "Runs smoothly.", weights: {} },
+        { label: "Slows significantly.", weights: { executionStall: 1, fragmentedWorkflow: 1 } },
+        { label: "Completely halts.", weights: { bottleneckOperator: 3 } },
+        { label: "Workarounds invented.", weights: { toolOverload: 2 } }
+      ]},
+      { id: "q6", topic: "restart frequency", question: "How often do you restart from scratch?", options: [
+        { label: "Rarely. Templates work.", weights: {} },
+        { label: "Every few months.", weights: { toolOverload: 2 } },
+        { label: "Constantly. Day one feel.", weights: { executionStall: 2, fragmentedWorkflow: 1 } },
+        { label: "Main expert change.", weights: { bottleneckOperator: 2 } }
+      ]},
+      { id: "q7", topic: "decision drift", question: "Are decisions frequently reopened?", options: [
+        { label: "Yes, context lost.", weights: { fragmentedWorkflow: 2 } },
+        { label: "Yes, owner out of loop.", weights: { bottleneckOperator: 2 } },
+        { label: "Yes, analysis paralysis.", weights: { executionStall: 3 } },
+        { label: "No, decisions final.", weights: {} }
+      ]},
+      { id: "q8", topic: "repeatability", question: "Can a new hire repeat the workflow?", options: [
+        { label: "Fully documented.", weights: {} },
+        { label: "No, tool fluencies.", weights: { toolOverload: 2 } },
+        { label: "No, unspoken context.", weights: { bottleneckOperator: 2, fragmentedWorkflow: 1 } },
+        { label: "No workflow exists.", weights: { executionStall: 2 } }
+      ]},
+      { id: "q9", topic: "AI deployment", question: "How is AI driving your progress?", options: [
+        { label: "Randomly. One-offs.", weights: { fragmentedWorkflow: 2 } },
+        { label: "Paid but unused.", weights: { toolOverload: 3 } },
+        { label: "No time to implement.", weights: { executionStall: 2 } },
+        { label: "Native integration.", weights: {} }
+      ]},
+      { id: "q10", topic: "output leakage", question: "What happens to finished work?", options: [
+        { label: "System of record.", weights: {} },
+        { label: "Google Drive black hole.", weights: { fragmentedWorkflow: 2 } },
+        { label: "Siloed in tools.", weights: { toolOverload: 2 } },
+        { label: "Local desktop static.", weights: { bottleneckOperator: 2 } }
+      ]},
+      { id: "q11", topic: "follow-up lag", question: "How are follow-ups tracked?", options: [
+        { label: "Automated triggers.", weights: {} },
+        { label: "Manual to-do lists.", weights: { toolOverload: 2 } },
+        { label: "Memory and Slack.", weights: { fragmentedWorkflow: 3 } },
+        { label: "Things slip through.", weights: { executionStall: 2 } }
+      ]},
+      { id: "q12", topic: "system alignment", question: "Does the system match your flow?", options: [
+        { label: "Perfectly aligned.", weights: {} },
+        { label: "Double entry required.", weights: { toolOverload: 2, fragmentedWorkflow: 1 } },
+        { label: "I do what works.", weights: { bottleneckOperator: 2 } },
+        { label: "System kills momentum.", weights: { executionStall: 2 } }
+      ]},
+      { id: "q13", topic: "next-step clarity", question: "Is the next step obvious?", options: [
+        { label: "Always. Queue sets it.", weights: {} },
+        { label: "Hunt for status.", weights: { fragmentedWorkflow: 2 } },
+        { label: "Notification overload.", weights: { toolOverload: 2 } },
+        { label: "Deciding takes hours.", weights: { executionStall: 3 } }
+      ]},
+      { id: "q14", topic: "manual rep", question: "Time spent copying/pasting?", options: [
+        { label: "Under 5%.", weights: {} },
+        { label: "20%. To save time.", weights: { bottleneckOperator: 1 } },
+        { label: "40%. Tools disconnected.", weights: { toolOverload: 3, fragmentedWorkflow: 1 } },
+        { label: "My actual job.", weights: { executionStall: 2 } }
+      ]},
+      { id: "q15", topic: "desired fix", question: "What is the single fix?", options: [
+        { label: "Fewer tools. Connection.", weights: { toolOverload: 2, fragmentedWorkflow: 1 } },
+        { label: "Removing myself.", weights: { bottleneckOperator: 3 } },
+        { label: "Consolidated comms.", weights: { fragmentedWorkflow: 2 } },
+        { label: "Momentum. Speed.", weights: { executionStall: 2 } }
+      ]}
+    ];
+
+    let currentQIndex = 0;
+    let scores = {
+      toolOverload: 0,
+      bottleneckOperator: 0,
+      fragmentedWorkflow: 0,
+      executionStall: 0
+    };
+
     function triggerFlash(callback) {
       const flash = document.getElementById('flash');
       flash.classList.add('is-flashing');
@@ -221,26 +333,72 @@
       }, 150);
     }
 
-    function advanceToMid() {
-      document.getElementById('state-initial').style.display = 'none';
-      document.getElementById('state-mid').style.display = 'flex';
-      document.getElementById('state-mid').style.flexDirection = 'column';
-      document.getElementById('state-mid').style.height = '100%';
-      
-      document.getElementById('val-status').innerHTML = '<span style="color:red">FRAGMENTED</span>';
-      document.getElementById('val-clarity').innerHTML = '48% <span style="font-size:0.75rem">(GAP FORMING)</span>';
+    function handleSelect(weights) {
+      for (const [archetype, value] of Object.entries(weights)) {
+        scores[archetype] += value;
+      }
+      currentQIndex++;
+      triggerFlash(renderQuestion);
     }
 
-    function advanceToFinal() {
-      document.getElementById('state-mid').style.display = 'none';
-      document.getElementById('state-final').style.display = 'flex';
-      document.getElementById('state-final').style.flexDirection = 'column';
-      document.getElementById('state-final').style.height = '100%';
+    function renderQuestion() {
+      if (currentQIndex >= intakeConfig.length) {
+        showFinalState();
+        return;
+      }
+
+      const q = intakeConfig[currentQIndex];
+      const clarity = Math.round((currentQIndex / intakeConfig.length) * 100);
       
-      document.getElementById('val-status').innerHTML = '<span style="color:red">TOOL OVERLOAD</span>';
+      document.getElementById('val-clarity').innerText = clarity + '%';
+      document.getElementById('val-status').innerText = currentQIndex < 5 ? 'AWAITING_INPUT' : (currentQIndex < 10 ? 'ANALYZING_FLOW' : 'MAPPING_GAPS');
+      
+      document.getElementById('q-topic-label').innerText = `[ Q${String(currentQIndex + 1).padStart(2, '0')} / 15: ${q.topic.toUpperCase()} ]`;
+      document.getElementById('q-text').innerText = q.question;
+
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'diag-option';
+        btn.setAttribute('data-index', String(idx + 1).padStart(2, '0'));
+        btn.innerText = opt.label;
+        btn.onclick = () => handleSelect(opt.weights);
+        container.appendChild(btn);
+      });
+
+      // AVA Contextual Feedback
+      const ava = document.getElementById('ava-feedback');
+      const avaText = document.getElementById('ava-text');
+      if (currentQIndex === 1) {
+        ava.style.display = 'block';
+        avaText.innerText = "THIS IS USUALLY WHERE SYSTEMS BREAK FIRST.";
+      } else if (currentQIndex === 7) {
+        avaText.innerText = "YOU'RE NOT OVERLOADED. YOUR FLOW IS DISCONNECTED.";
+      } else if (currentQIndex === 12) {
+        avaText.innerText = "SYSTEM FRICTION IS THE PRIMARY CAUSE OF STALL.";
+      } else if (currentQIndex > 0) {
+        ava.style.display = 'none';
+      }
+    }
+
+    function showFinalState() {
+      document.getElementById('diagnostic-container').style.display = 'none';
+      document.getElementById('state-final').style.display = 'flex';
+      
       document.getElementById('val-clarity').innerText = '100%';
       document.getElementById('val-blueprint').innerHTML = '<span style="color:#fff; background:var(--accent-red); padding:0 4px;">READY</span>';
+      
+      // Calculate top archetype
+      const topArchetype = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+      document.getElementById('val-status').innerText = topArchetype.replace(/([A-Z])/g, '_$1').toUpperCase();
+
+      // Update blueprint link
+      document.getElementById('view-blueprint-link').href = `blueprint.html?archetype=${topArchetype}`;
     }
+
+    // Start Question 1
+    renderQuestion();
   </script>
 </body>
 </html>
