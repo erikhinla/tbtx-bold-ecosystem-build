@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bridge into AI - Blueprint with B2C and B2B modes.">
+  <title>Bridge into AI - Blueprint | TBTX</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    body { margin: 0; }
+    header { border-bottom: 4px solid var(--text-primary); padding: 1rem 1.5rem; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .hero { border-bottom: 6px solid var(--text-primary); padding-bottom: 2rem; margin-bottom: 2.5rem; }
+    .macro { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; letter-spacing: -0.05em; line-height: .86; font-size: clamp(2.2rem,8vw,6rem); margin: 0; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .pill { display:inline-block; border:2px solid var(--text-primary); padding:.35rem .65rem; font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; font-weight:700; margin-right:.5rem; margin-top:.6rem; }
+    .toggle { display:flex; border:2px solid var(--text-primary); width:fit-content; margin-top:1rem; }
+    .toggle button { border:none; background:transparent; color:var(--text-primary); font-family:'JetBrains Mono', monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; padding:.6rem .9rem; cursor:pointer; }
+    .toggle button.active { background: var(--text-primary); color: var(--bg-color); }
+    .section { display:grid; grid-template-columns: 180px 1fr; gap: 1.2rem; border-bottom:2px solid var(--text-primary); padding: 1.5rem 0; }
+    .label { font-family:'JetBrains Mono', monospace; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; border-top:2px solid var(--text-primary); padding-top:.5rem; font-weight:700; }
+    .h { font-family:'Archivo Black', sans-serif; text-transform:uppercase; letter-spacing:-.03em; line-height:.92; font-size:clamp(1.6rem,4vw,3rem); margin:.2rem 0 1rem; }
+    .txt { font-family:'JetBrains Mono', monospace; font-size:.85rem; line-height:1.7; max-width:72ch; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:2px; background:var(--text-primary); border:2px solid var(--text-primary); margin-top:1rem; }
+    .cell { background:var(--bg-color); padding:1rem; }
+    .cell h3 { font-family:'Archivo Black', sans-serif; text-transform:uppercase; font-size:1rem; margin:0 0 .5rem; }
+    .tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.8rem; }
+    .tag { border:2px solid var(--text-primary); padding:.2rem .45rem; font-family:'JetBrains Mono', monospace; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700; }
+    .tag.hot { background:var(--accent-red); color:#fff; border-color:var(--accent-red); }
+    .actions { margin-top:1.5rem; display:flex; gap:.6rem; flex-wrap:wrap; }
+    @media (max-width: 900px){ .section{grid-template-columns:1fr;} .grid{grid-template-columns:1fr;} }
+    @media print { nav, .actions, .toggle { display:none; } }
+  </style>
+</head>
+<body>
+  <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <div class="mono" style="font-weight:700;">TBTX // BRIDGE INTO AI - BLUEPRINT</div>
+    <nav>
+      <a href="diagnostic.html">Recalibrate</a>
+      <a href="../bizbuilders/index.html">BizBuilders AI</a>
+      <a href="../bizbotmarketing/index.html">BizBot Mrktng</a>
+      <a href="../fogliftkit/index.html">Fog Lift Kit</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="mono" style="font-size:.72rem;letter-spacing:.15em;color:var(--accent-red);text-transform:uppercase;">[ profile mapped ]</div>
+      <h1 class="macro">Bridge into AI<br><span style="color:var(--accent-red);">Blueprint</span></h1>
+      <div>
+        <span class="pill" id="pillMode">Mode: B2C</span>
+        <span class="pill" id="pillIndustry">Industry: GENERAL</span>
+        <span class="pill" id="pillArc">Archetype: CLARITY</span>
+      </div>
+      <div class="toggle">
+        <button id="btnB2C" class="active" onclick="setMode('b2c')">B2C Mode</button>
+        <button id="btnB2B" onclick="setMode('b2b')">B2B Mode</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="label">01 / Diagnosis</div>
+      <div>
+        <h2 class="h" id="diagTitle">Digital Fog Pattern</h2>
+        <p class="txt" id="diagText"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="label">02 / Quad Keystones</div>
+      <div>
+        <h2 class="h">Foundational Keystones</h2>
+        <p class="txt">These four keystones define the organizational foundation before tools are layered in.</p>
+        <div class="grid" id="keystones"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="label">03 / Industry Layer</div>
+      <div>
+        <h2 class="h" id="industryTitle">Industry Recommendations</h2>
+        <p class="txt" id="industryText"></p>
+        <div class="tags" id="toolTags"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="label">04 / First Moves</div>
+      <div>
+        <h2 class="h" id="moveTitle">First 3 Moves</h2>
+        <div class="txt" id="moves"></div>
+        <div class="actions">
+          <button onclick="window.print()">Export PDF Blueprint</button>
+          <a class="btn" href="../fogliftkit/index.html">Open Fog Lift Kit</a>
+          <a class="btn btn-outline" href="../bizbuilders/index.html">Go to BizBuilders AI</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const industry = (params.get('industry') || 'general').toLowerCase();
+    const archetype = (params.get('archetype') || 'clarity').toLowerCase();
+    let mode = (params.get('mode') || 'b2c').toLowerCase() === 'b2b' ? 'b2b' : 'b2c';
+
+    const diagByArc = {
+      clarity: {
+        b2c: 'You are active but direction is diffused. The fix is a decision layer first, then selective automation.',
+        b2b: 'Your organization is executing without clear hierarchy of priorities. Rebuild decision cadence before adding more tools.'
+      },
+      overload: {
+        b2c: 'Too many moving parts are fighting for attention. Cut tool noise and restore one clear operating rhythm.',
+        b2b: 'Tool sprawl is fragmenting team output. Consolidate stack roles and remove duplicate workflows.'
+      },
+      leverage: {
+        b2c: 'Your capability is trapped in manual effort. Externalize your knowledge and build repeatable leverage loops.',
+        b2b: 'Critical workflows depend on people instead of systems. Build delegation + automation handoff layers now.'
+      },
+      structure: {
+        b2c: 'You have momentum but no stable spine. Define workflow architecture so progress compounds week to week.',
+        b2b: 'Business processes exist but are disconnected. Map one unified operations spine across teams and tools.'
+      }
+    };
+
+    const stackByIndustry = {
+      tech: {text:'Prioritize product, support, and documentation loops with AI-assisted execution.', tools:['gpt-4.1','github copilot','linear','notion','zapier']},
+      creative: {text:'Use AI for content multiplication while preserving voice and positioning.', tools:['gpt-4.1','descript','runway','canva','postiz']},
+      service: {text:'Automate intake, scheduling, follow-up, and review workflows to stabilize demand.', tools:['gpt-4.1','zapier','airtable','postiz','calendar automation']},
+      education: {text:'Systematize curriculum delivery, communication cadence, and learning feedback loops.', tools:['gpt-4.1','notion','loom','email automation','postiz']},
+      general: {text:'Start with central context, then connect repetitive workflows into one operating spine.', tools:['gpt-4.1','notion','zapier','airtable','postiz']}
+    };
+
+    const keystonesByMode = {
+      b2c: [
+        ['Clarity Layer','Define outcome, constraints, and weekly focus signal.'],
+        ['Knowledge Layer','Store personal frameworks and reusable context.'],
+        ['Workflow Spine','Map repeatable actions and completion triggers.'],
+        ['Leverage Layer','Automate repetitive work and preserve decision energy.']
+      ],
+      b2b: [
+        ['Operating Architecture','Map business workflows, owners, and handoffs.'],
+        ['Context System','Centralize SOPs, metrics, and institutional knowledge.'],
+        ['Automation Spine','Connect core tools and trigger-based execution.'],
+        ['Agent Layer','Assign AI agents to bounded roles with escalation paths.']
+      ]
+    };
+
+    const movesByMode = {
+      b2c: [
+        'Run one weekly workflow audit and cut one non-essential tool.',
+        'Build one automation around your highest-repeat manual task.',
+        'Use Fog Lift Kit to lock a weekly review loop so progress compounds.'
+      ],
+      b2b: [
+        'Map one revenue-critical workflow end to end (owner + trigger + output).',
+        'Deploy first automation where handoffs stall most often.',
+        'Coordinate with BizBuilders AI to connect infrastructure + decision cadence.'
+      ]
+    };
+
+    function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function render(){
+      const arcData = diagByArc[archetype] || diagByArc.clarity;
+      const stack = stackByIndustry[industry] || stackByIndustry.general;
+
+      document.getElementById('pillMode').textContent = `Mode: ${mode.toUpperCase()}`;
+      document.getElementById('pillIndustry').textContent = `Industry: ${industry.toUpperCase()}`;
+      document.getElementById('pillArc').textContent = `Archetype: ${archetype.toUpperCase()}`;
+
+      document.getElementById('diagTitle').textContent = `${cap(archetype)} Pattern`;
+      document.getElementById('diagText').textContent = arcData[mode];
+      document.getElementById('industryTitle').textContent = `${cap(industry)} AI + Infrastructure Layer`;
+      document.getElementById('industryText').textContent = stack.text;
+
+      const ks = document.getElementById('keystones');
+      ks.innerHTML = keystonesByMode[mode].map(([t,d]) => `<div class="cell"><h3>${t}</h3><p class="txt" style="font-size:.78rem;">${d}</p></div>`).join('');
+
+      const tags = document.getElementById('toolTags');
+      tags.innerHTML = stack.tools.map((t, i)=> `<span class="tag ${i<2?'hot':''}">${t}</span>`).join('');
+
+      document.getElementById('moveTitle').textContent = mode === 'b2c' ? 'First 3 Personal Moves' : 'First 3 Business Moves';
+      document.getElementById('moves').innerHTML = `<ol style="padding-left:1.1rem;">${movesByMode[mode].map(m => `<li style="margin:.5rem 0;">${m}</li>`).join('')}</ol>`;
+
+      document.getElementById('btnB2C').classList.toggle('active', mode === 'b2c');
+      document.getElementById('btnB2B').classList.toggle('active', mode === 'b2b');
+    }
+
+    function setMode(next){ mode = next; render(); }
+    render();
+  </script>
+</body>
+</html>

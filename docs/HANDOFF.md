@@ -1,35 +1,34 @@
-# Production Handoff: Static TBTX Ecosystem
+# HANDOFF — TBTX Static Ecosystem
 
-## Overview
-This document guides the maintenance and extension of the **Static TBTX Ecosystem**. This version uses Vanilla JavaScript for all application logic to ensure zero-dependency portability.
+## What Was Finalized
 
-## Logic Implementation: 15-Question Engine
-The brain of the diagnostic system is located in:
-`bizbotmarketing/index.html`
+1. **TransformBy10X** now acts as the philosophical wrapper and Digital FOG campaign entry.
+2. Added `transformby10x/diagnostic.html` with a **15-question, B2C-lean** flow.
+3. Added `transformby10x/blueprint.html` branded as **Bridge into AI - Blueprint** with clear **B2C/B2B modes**.
+4. **BizBuilders AI** remains B2B-focused and aligned to shared blueprint framing.
+5. **BizBot Mrktng** branding applied (no-vowel naming retained in copy/nav).
+6. Added **Fog Lift Kit** static page with practical phase-based next actions.
+7. Updated landing navigation and cross-site links so all sections are reachable.
+8. Added `docker-compose.yml` for FLOW Agent AS deployment workflow.
 
-### Scoring Mechanism
-- Every answer applies weighted points (0-3) to one or more of the 4 archetypes defined in the `intakeConfig` array.
-- **Archetypes**: `toolOverload`, `bottleneckOperator`, `fragmentedWorkflow`, `executionStall`.
-- At the end of the 15-question set, the script identifies the top-scoring archetype and routes to:
-  `blueprint.html?archetype=[dominant_archetype]`
+## Maintenance Rules
 
-### Final State UX
-The diagnostic was updated to prioritize action:
-- **Primary CTA**: "→ BUILD THE SYSTEM" (Links to `/bizbuilders/index.html`)
-- **Secondary Link**: "View Blueprint" (Links to results)
+- Keep project static: HTML/CSS/vanilla JS only.
+- Keep Swiss Industrial Paint system from `styles.css`.
+- Preserve hard-edge UI language (avoid rounded SaaS-style UI patterns).
+- Keep TBTX diagnostic distinct from BizBot diagnostic (consumer vs business context).
+- Do not reintroduce OpenClaw or Anthropic references.
 
-## Design System
-The "Swiss Industrial Paint" aesthetic is derived from variables in `styles.css`.
-- **Macro-Typography**: Uses `Archivo Black`.
-- **Mechanical Grain**: SVG noise filter applied globally to body.
-- **Zero Radius**: All borders must have `0 !important`.
+## Deployment/Workflow Intent
 
-## Deployment
-This project is suitable for any static hosting environment.
-1. Push to GitHub.
-2. Link to Netlify or enable GitHub Pages.
-3. No build steps are required.
+- Deploy FLOW Agent AS first (`docker-compose.yml`) and start agent workflows.
+- In parallel, deploy and maintain:
+  - TransformBy10X.ai
+  - BizBuilders AI
+  - BizBot Mrktng
+- Use blueprint output + Fog Lift Kit phases to drive weekly execution.
 
----
+## Static Hosting
 
-Handed off by Antigravity.
+- GitHub Pages, Netlify, Vercel, or any static host.
+- No build or runtime server requirements.

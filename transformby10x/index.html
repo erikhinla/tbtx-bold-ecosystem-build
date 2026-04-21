@@ -3,153 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TransformBy10X - Digital Fog Diagnostic and AI Blueprint">
-  <title>TransformBy10X | System Infrastructure</title>
+  <meta name="description" content="TransformBy10X — Digital FOG entry point and wrapper brand for the Bridge into AI ecosystem.">
+  <title>TransformBy10X | Digital FOG Entry</title>
   <link rel="stylesheet" href="../styles.css">
   <style>
-    /* EXTREME TYPE BREAK / HARD CUTS */
-    body {
-      background-color: var(--bg-color);
-      overflow-x: hidden;
-    }
-    header {
-      border-bottom: 4px solid var(--text-primary);
-      padding: 1.5rem 3rem;
-    }
-    .manifesto-cut {
-      padding: 8rem 3rem;
+    body { overflow-x: hidden; }
+    header { border-bottom: 4px solid var(--text-primary); padding: 1rem 2rem; }
+    .cut {
       border-bottom: 6px solid var(--text-primary);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      padding: 6rem 2rem;
       position: relative;
-    }
-    .macro-extreme {
-      font-family: 'Archivo Black', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: -0.06em;
-      line-height: 0.85;
-      font-size: min(18vw, 250px);
-      color: var(--text-primary);
-      margin-left: -0.05em; /* Optical alignment */
-      word-wrap: break-word;
-      hyphens: auto;
-    }
-    .macro-red {
-      color: var(--accent-red);
     }
     .cut-meta {
       position: absolute;
       top: 1rem;
-      left: 3rem;
+      left: 2rem;
       font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--accent-red);
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
+      font-weight: 700;
     }
-    .statement-block {
-      max-width: 50vw;
-      margin-top: 4rem;
-      font-size: clamp(2rem, 4vw, 4rem);
-      line-height: 1.1;
-      letter-spacing: -0.03em;
+    .macro {
       font-family: 'Archivo Black', sans-serif;
       text-transform: uppercase;
-    }
-    .system-label {
-      display: inline-block;
-      background: var(--text-primary);
-      color: var(--bg-color);
-      padding: 0.25em 0.5em;
-      margin-top: 2rem;
-      transform: translateY(-0.1em);
-    }
-    .cta-massive {
-      font-size: clamp(4rem, 10vw, 12rem);
+      line-height: 0.84;
       letter-spacing: -0.05em;
-      text-align: center;
+      font-size: clamp(3rem, 11vw, 11rem);
+      margin: 0;
+    }
+    .mono-block {
+      margin-top: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 44ch;
+      font-weight: 700;
+    }
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .frame {
+      border: 2px solid var(--text-primary);
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+    .big-cta {
       display: block;
-      transition: color 0.2s, background 0.2s;
-      cursor: pointer;
       text-decoration: none;
-      padding: 4rem 0;
+      border-top: 6px solid var(--text-primary);
+      border-bottom: 6px solid var(--text-primary);
+      padding: 4rem 2rem;
+      color: var(--text-primary);
+      transition: 0.1s;
     }
-    .cta-massive:hover {
-      background-color: var(--accent-red);
-      color: var(--bg-color);
-    }
+    .big-cta:hover { background: var(--accent-red); color: #fff; }
+    .big-cta .macro { font-size: clamp(3rem, 10vw, 8rem); }
+    @media (max-width: 900px) { .grid-two { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-  
-  <header style="display:flex; justify-content:space-between; align-items:flex-end;">
-    <div class="logo macro-type" style="font-size:3rem; margin:0; line-height:0.8;">TBTX<br><span style="font-size:1rem; letter-spacing:0.05em; font-family:'JetBrains Mono';">VOL.01</span></div>
+  <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <div class="mono" style="font-weight:700;">TBTX // VOL_01</div>
     <nav>
-      <a href="../transformby10x/index.html" class="active">TransformBy10X</a>
+      <a href="../index.html">Ecosystem</a>
+      <a class="active" href="index.html">TransformBy10X</a>
       <a href="../bizbuilders/index.html">BizBuilders AI</a>
-      <a href="../bizbotmarketing/index.html">BizBot Marketing</a>
+      <a href="../bizbotmarketing/index.html">BizBot Mrktng</a>
+      <a href="../fogliftkit/index.html">Fog Lift Kit</a>
     </nav>
   </header>
 
   <main>
-    <!-- SECTION 1 -->
-    <section class="manifesto-cut">
-      <span class="cut-meta">PART_01 // THE REALITY</span>
-      <h1 class="macro-extreme">WORK IS HAPPENING</h1>
-      <h1 class="macro-extreme macro-red">NOTHING IS MOVING</h1>
-      <div class="statement-block">
-        <span class="mono accent-text" style="font-size:1.5rem; display:block; margin-bottom:1rem;">>>> DIAGNOSIS</span>
-        THAT'S DIGITAL FOG.
+    <section class="cut">
+      <span class="cut-meta">PART_01 // DIGITAL FOG</span>
+      <h1 class="macro">Work is happening</h1>
+      <h1 class="macro" style="color:var(--accent-red);">nothing is compounding</h1>
+      <p class="mono-block">THIS IS THE DIGITAL FOG PROBLEM. TBTX IS THE PHILOSOPHICAL WRAPPER THAT MAPS WHAT TO FIX FIRST.</p>
+    </section>
+
+    <section class="cut" style="background:var(--text-primary);color:var(--bg-color);border-bottom-color:var(--accent-red);">
+      <span class="cut-meta" style="color:var(--bg-color);">PART_02 // WRAPPER BRAND</span>
+      <h2 class="macro" style="font-size:clamp(2.5rem,9vw,8rem);">TBTX is the philosophy</h2>
+      <div class="grid-two">
+        <div class="frame" style="border-color:var(--bg-color);color:var(--bg-color);">
+          BIZBUILDERS AI
+          <br>→ B2B INFRASTRUCTURE LAYER
+          <br>→ OPERATING SYSTEM DESIGN
+        </div>
+        <div class="frame" style="border-color:var(--bg-color);color:var(--bg-color);">
+          BIZBOT MRKTNG
+          <br>→ B2B MARKETING DIAGNOSTIC
+          <br>→ EXECUTION WORKFLOWS
+        </div>
       </div>
     </section>
 
-    <!-- SECTION 2 -->
-    <section class="manifesto-cut" style="background-color: var(--text-primary); color: var(--bg-color); border-bottom-color: var(--accent-red);">
-      <span class="cut-meta" style="color: var(--bg-color);">PART_02 // THE DECEPTION</span>
-      <h2 class="macro-extreme" style="color: var(--bg-color);">IT DOESN'T LOOK LIKE FAILURE</h2>
-      <div class="statement-block" style="margin-left: auto; text-align: right; max-width: 70vw;">
-        IT LOOKS LIKE PROGRESS.<br>
-        <span class="macro-red system-label" style="background-color:var(--accent-red); color:var(--text-primary);">THAT NEVER COMPOUNDS.</span>
+    <section class="cut">
+      <span class="cut-meta">PART_03 // BRIDGE INTO AI</span>
+      <h2 class="macro" style="font-size:clamp(2.5rem,9vw,8rem);">Bridge into AI - Blueprint</h2>
+      <p class="mono-block">A 15-question diagnostic produces an industry-aware blueprint for AI, infrastructure, and tools. TWO MODES: B2C + B2B.</p>
+      <div class="grid-two">
+        <div class="frame">B2C MODE<br>PERSONAL WORKFLOW, LIFESTYLE OPERATIONS, SOLO LEVERAGE, KNOWLEDGE SYSTEMS.</div>
+        <div class="frame">B2B MODE<br>BUSINESS WORKFLOW, TEAM HANDOFFS, OPS AUTOMATION, REVENUE INFRASTRUCTURE.</div>
       </div>
     </section>
 
-    <!-- SECTION 3 & 4 -->
-    <section class="manifesto-cut">
-      <span class="cut-meta">PART_03 // THE SHIFT</span>
-      <h2 class="macro-extreme">YOU DON't NEED MORE TOOLS</h2>
-      <h2 class="macro-extreme" style="color:transparent; -webkit-text-stroke: 2px var(--text-primary);">YOU NEED A SYSTEM</h2>
-      
-      <div style="margin-top: 8rem; border-top: 4px solid var(--text-primary); padding-top: 4rem;">
-        <h2 class="statement-block" style="max-width: 100%;">INTELLIGENCE ISN'T IN THE TOOLS.<br>IT'S IN THE INFRASTRUCTURE.</h2>
-      </div>
-    </section>
-
-    <!-- SECTION 5 (Bridge) -->
-    <section class="manifesto-cut" style="display:grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
-      <span class="cut-meta">PART_04 // THE BLUEPRINT</span>
-      <div>
-        <h2 class="macro-extreme macro-red" style="font-size: clamp(4rem, 8vw, 8rem);">THE AI<br>BLUEPRINT</h2>
-      </div>
-      <div style="display:flex; flex-direction:column; justify-content:flex-end;">
-        <p class="mono" style="font-size: 2rem; max-width: 20ch; line-height: 1.2;">
-          SHOWS YOU WHERE THE SYSTEM BREAKS<br><br>AND WHAT TO FIX FIRST.
-        </p>
-      </div>
-    </section>
-
-    <!-- SECTION 6 (CTA) -->
-    <a href="#diagnostic" class="cta-massive macro-extreme">
-      <div class="mono" style="font-size:1.5rem; margin-bottom:1rem; letter-spacing:0.1em; font-weight:700;">>>> INITIALIZE</div>
-      RUN THE<br>DIAGNOSTIC
-      <div class="mono" style="font-size:1.5rem; margin-top:2rem; letter-spacing:0.1em;">[ SEE WHAT'S ACTUALLY SLOWING YOU DOWN ]</div>
+    <a class="big-cta" href="diagnostic.html">
+      <div class="mono" style="font-size:0.85rem;letter-spacing:0.16em;">>>> INITIALIZE</div>
+      <div class="macro">Run the diagnostic</div>
+      <div class="mono" style="font-size:0.85rem;opacity:.7;">[ ENTRY POINT TO BLUEPRINT + FOG LIFT KIT ]</div>
     </a>
   </main>
-
-  <footer style="padding: 2rem 3rem; background: var(--text-primary); color: var(--bg-color); display:flex; justify-content: space-between;">
-    <span class="mono">© 2026 TRANSFORMBY10X</span>
-    <span class="mono system-label" style="background:var(--accent-red); margin:0;">COMPLETION BEATS PERFECTION</span>
-  </footer>
-
 </body>
 </html>
