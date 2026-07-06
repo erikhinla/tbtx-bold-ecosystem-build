@@ -3,5 +3,67 @@
   "framework": null,
   "installCommand": null,
   "buildCommand": null,
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "transformby10x.ai" }],
+      "destination": "/transformby10x/index.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.transformby10x.ai" }],
+      "destination": "/transformby10x/index.html"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "transformby10x.ai" }],
+      "destination": "/transformby10x/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.transformby10x.ai" }],
+      "destination": "/transformby10x/:path*"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "bizbuilders.ai" }],
+      "destination": "/bizbuilders/index.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.bizbuilders.ai" }],
+      "destination": "/bizbuilders/index.html"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "bizbuilders.ai" }],
+      "destination": "/bizbuilders/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.bizbuilders.ai" }],
+      "destination": "/bizbuilders/:path*"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "bizbotmarketing.ai" }],
+      "destination": "/bizbotmarketing/index.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.bizbotmarketing.ai" }],
+      "destination": "/bizbotmarketing/index.html"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "bizbotmarketing.ai" }],
+      "destination": "/bizbotmarketing/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.bizbotmarketing.ai" }],
+      "destination": "/bizbotmarketing/:path*"
+    }
+  ]
 }
