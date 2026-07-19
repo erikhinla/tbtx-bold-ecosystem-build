@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TransformBy10X 15-question diagnostic for Bridge into AI - Blueprint.">
+  <title>TBTX Diagnostic | Bridge into AI</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    body { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+    header { border-bottom: 4px solid var(--text-primary); padding: 1rem 1.5rem; }
+    .app { flex: 1; display: grid; grid-template-columns: 1fr 1.2fr; min-height: 0; }
+    .left { background: var(--text-primary); color: var(--bg-color); padding: 2.25rem 1.5rem; }
+    .left h1 { color: var(--bg-color); margin-bottom: 1rem; }
+    .right { padding: 1.5rem; overflow-y: auto; position: relative; }
+    .status { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .status span { border: 2px solid var(--text-primary); padding: .25rem .5rem; }
+    .question { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; line-height: .95; font-size: clamp(1.6rem, 4vw, 3rem); margin: 1.2rem 0; }
+    .option { width: 100%; text-align: left; margin-bottom: .6rem; border: 2px solid var(--text-primary); background: transparent; color: var(--text-primary); font-family: 'Archivo Black', sans-serif; text-transform: uppercase; padding: 1rem; cursor: pointer; }
+    .option:hover { background: var(--text-primary); color: var(--bg-color); }
+    .note { margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: .8rem; line-height: 1.6; border-left: 4px solid var(--accent-red); padding-left: .75rem; }
+    .final { display:none; }
+    .final h2 { border: none; padding: 0; }
+    .btn { margin-top: 1rem; }
+    @media (max-width: 900px) { body{height:auto;overflow:auto;} .app{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <div class="mono" style="font-weight:700;">TBTX // 15Q DIAGNOSTIC</div>
+    <nav>
+      <a href="../index.html">Ecosystem</a>
+      <a href="index.html">TransformBy10X</a>
+      <a href="../bizbuilders/index.html">BizBuilders AI</a>
+      <a href="../bizbotmarketing/index.html">BizBot Mrktng</a>
+    </nav>
+  </header>
+
+  <main class="app">
+    <aside class="left">
+      <div class="mono" style="color:var(--accent-red);margin-bottom:1rem;">[ DIGITAL FOG ENTRY ]</div>
+      <h1 style="font-size:clamp(2rem,7vw,4.5rem);line-height:.85;">Bridge into AI<br>Blueprint</h1>
+      <p class="mono" style="font-size:.85rem;line-height:1.7;opacity:.85;">B2C-lean diagnostic. Profile + industry context define your blueprint for AI, infrastructure, and tools.</p>
+      <div class="mono" id="modeDisplay" style="margin-top:1.5rem;border:2px solid var(--bg-color);display:inline-block;padding:.35rem .6rem;">Mode: Pending</div>
+    </aside>
+
+    <section class="right">
+      <div class="status">
+        <span id="progress">Q01/15</span>
+        <span id="clarity">Clarity: 0%</span>
+        <span id="industry">Industry: --</span>
+      </div>
+
+      <div id="quiz">
+        <div class="mono" id="topic" style="font-size:.72rem;color:var(--accent-red);">[ INITIALIZING ]</div>
+        <div class="question" id="question">Loading…</div>
+        <div id="options"></div>
+        <div class="note" id="intel">FOG_INTEL: Mapping your context.</div>
+      </div>
+
+      <div class="final" id="final">
+        <h2 class="question" style="font-size:clamp(1.9rem,5vw,3.5rem);">Profile mapped.<br>Blueprint ready.</h2>
+        <p class="mono" style="font-size:.85rem;line-height:1.7;max-width:46ch;">Your Bridge into AI blueprint now includes mode, industry context, quad keystones, and practical next actions.</p>
+        <a id="blueprintLink" class="btn" href="blueprint.html">View Bridge into AI - Blueprint</a>
+        <a class="btn btn-outline" href="../fogliftkit/index.html">Open Fog Lift Kit</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const state = {
+      mode: 'b2c',
+      industry: 'general',
+      scores: { clarity: 0, overload: 0, leverage: 0, structure: 0 },
+      q: 0
+    };
+
+    const questions = [
+      {topic:'industry context', q:'Which best describes your world right now?', options:[
+        {label:'Creative / content / media', industry:'creative', w:{leverage:1}},
+        {label:'Service business / local ops', industry:'service', w:{structure:1}},
+        {label:'Tech / digital products', industry:'tech', w:{clarity:1}},
+        {label:'Health / education / coaching', industry:'education', w:{leverage:1}}
+      ]},
+      {topic:'profile type', q:'What are you optimizing first?', options:[
+        {label:'My personal output and lifestyle', mode:'b2c', w:{clarity:1}},
+        {label:'Business growth and operations', mode:'b2b', w:{structure:1}},
+        {label:'Both — I am the operator and the business', mode:'b2c', w:{overload:1}},
+        {label:'I need clarity before choosing', mode:'b2c', w:{clarity:1}}
+      ]},
+      {topic:'daily reality', q:'How does a normal day feel?', options:[
+        {label:'Reactive all day', w:{overload:2}},
+        {label:'Busy but not compounding', w:{clarity:2}},
+        {label:'Deep work blocked by admin', w:{structure:2}},
+        {label:'Mostly aligned but slow', w:{leverage:1}}
+      ]},
+      {topic:'tool behavior', q:'How are you using AI tools now?', options:[
+        {label:'Not using them yet', w:{clarity:2}},
+        {label:'Random one-off prompts', w:{overload:2}},
+        {label:'Several tools, no system', w:{structure:2}},
+        {label:'Some repeatable workflows', w:{leverage:2}}
+      ]},
+      {topic:'knowledge layer', q:'Where does your best process live?', options:[
+        {label:'Mostly in my head', w:{leverage:2}},
+        {label:'Scattered across notes/apps', w:{overload:2}},
+        {label:'Partly documented', w:{structure:1}},
+        {label:'Structured and reusable', w:{clarity:1}}
+      ]},
+      {topic:'handoff risk', q:'If you disappear for one week, what breaks?', options:[
+        {label:'Everything stalls', w:{leverage:2}},
+        {label:'Some key tasks stall', w:{structure:2}},
+        {label:'Mostly stable', w:{clarity:1}},
+        {label:'Runs with minor issues', w:{clarity:1}}
+      ]},
+      {topic:'decision system', q:'How do you pick what to do next?', options:[
+        {label:'Urgency chooses for me', w:{overload:2}},
+        {label:'Instinct / mood', w:{clarity:2}},
+        {label:'Task list with weak priorities', w:{structure:1}},
+        {label:'Clear operating cadence', w:{clarity:1}}
+      ]},
+      {topic:'communication load', q:'How much time goes into manual communication?', options:[
+        {label:'Too much, daily drain', w:{overload:2}},
+        {label:'Moderate, but inconsistent', w:{structure:1}},
+        {label:'Mostly templated and clean', w:{clarity:1}},
+        {label:'Automated for routine cases', w:{leverage:2}}
+      ]},
+      {topic:'revenue/impact gap', q:'Your effort-to-results gap feels…', options:[
+        {label:'Huge', w:{clarity:2}},
+        {label:'Frustrating but solvable', w:{structure:1}},
+        {label:'Improving slowly', w:{leverage:1}},
+        {label:'Closing quickly', w:{clarity:1}}
+      ]},
+      {topic:'infrastructure', q:'Do your core tools talk to each other?', options:[
+        {label:'No connections', w:{structure:2}},
+        {label:'A few manual bridges', w:{overload:1}},
+        {label:'Partly automated', w:{structure:1}},
+        {label:'Connected system', w:{clarity:1}}
+      ]},
+      {topic:'workflow repeatability', q:'Can someone else repeat your process?', options:[
+        {label:'No, it depends on me', w:{leverage:2}},
+        {label:'Partially', w:{structure:1}},
+        {label:'Mostly yes', w:{clarity:1}},
+        {label:'Yes with docs + triggers', w:{leverage:1}}
+      ]},
+      {topic:'market visibility', q:'How predictable is attention/inbound demand?', options:[
+        {label:'Unpredictable', w:{clarity:2}},
+        {label:'Depends on manual posting', w:{overload:1}},
+        {label:'Some system exists', w:{structure:1}},
+        {label:'Consistent pipeline', w:{clarity:1}}
+      ]},
+      {topic:'execution friction', q:'What slows execution most?', options:[
+        {label:'Context switching', w:{overload:2}},
+        {label:'No single source of truth', w:{structure:2}},
+        {label:'Lack of delegation/automation', w:{leverage:2}},
+        {label:'Decision hesitation', w:{clarity:2}}
+      ]},
+      {topic:'future state', q:'Which outcome matters first in the next 90 days?', options:[
+        {label:'More time + less chaos', w:{overload:1}},
+        {label:'Higher output quality', w:{clarity:1}},
+        {label:'Reliable business workflow', w:{structure:1}},
+        {label:'Scalable leverage', w:{leverage:1}}
+      ]},
+      {topic:'deployment readiness', q:'What do you want this blueprint to do for you?', options:[
+        {label:'Tell me where to start now', w:{clarity:2}},
+        {label:'Give me first automations', w:{structure:2}},
+        {label:'Build leverage around my expertise', w:{leverage:2}},
+        {label:'Reduce unnecessary tools', w:{overload:2}}
+      ]}
+    ];
+
+    const intelByIndex = {
+      1: 'FOG_INTEL: MODE DETECTION ACTIVE (B2C/B2B).',
+      4: 'FOG_INTEL: TOOL USAGE WITHOUT STRUCTURE CREATES MORE FOG.',
+      8: 'FOG_INTEL: INDUSTRY CONTEXT SHAPES WHAT TO AUTOMATE FIRST.',
+      12:'FOG_INTEL: QUAD KEYSTONES WILL DEFINE YOUR BLUEPRINT FOUNDATION.'
+    };
+
+    function applyWeights(w={}) {
+      Object.keys(w).forEach(k => state.scores[k] += w[k]);
+    }
+
+    function choose(opt) {
+      applyWeights(opt.w);
+      if (opt.mode) state.mode = opt.mode;
+      if (opt.industry) state.industry = opt.industry;
+      state.q += 1;
+      render();
+    }
+
+    function render() {
+      const progress = document.getElementById('progress');
+      const clarity = document.getElementById('clarity');
+      const industry = document.getElementById('industry');
+      const modeDisplay = document.getElementById('modeDisplay');
+      progress.textContent = `Q${String(Math.min(state.q+1,15)).padStart(2,'0')}/15`;
+      clarity.textContent = `Clarity: ${Math.round((state.q/15)*100)}%`;
+      industry.textContent = `Industry: ${state.industry.toUpperCase()}`;
+      modeDisplay.textContent = `Mode: ${state.mode.toUpperCase()}`;
+
+      if (state.q >= questions.length) {
+        document.getElementById('quiz').style.display = 'none';
+        const final = document.getElementById('final');
+        final.style.display = 'block';
+
+        // Determine dominant archetype
+        const dominant = Object.keys(state.scores).reduce((a,b)=> state.scores[a] > state.scores[b] ? a : b);
+        const link = `blueprint.html?mode=${state.mode}&industry=${state.industry}&archetype=${dominant}`;
+        document.getElementById('blueprintLink').href = link;
+        return;
+      }
+
+      const q = questions[state.q];
+      document.getElementById('topic').textContent = `[ ${q.topic.toUpperCase()} ]`;
+      document.getElementById('question').textContent = q.q;
+      const options = document.getElementById('options');
+      options.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = `${String(idx+1).padStart(2,'0')} // ${opt.label}`;
+        btn.onclick = () => choose(opt);
+        options.appendChild(btn);
+      });
+      document.getElementById('intel').textContent = intelByIndex[state.q] || 'FOG_INTEL: Continue. This profile reshapes your blueprint output.';
+    }
+
+    render();
+  </script>
+</body>
+</html>

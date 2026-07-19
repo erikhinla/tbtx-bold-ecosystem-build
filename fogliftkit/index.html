@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fog Lift Kit — practical workplan to keep progress moving after diagnostics and blueprint.">
+  <title>Fog Lift Kit | TBTX Ecosystem</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    header { border-bottom: 4px solid var(--text-primary); padding: 1rem 1.5rem; }
+    .hero, .phase, .ecosystem { border-bottom: 6px solid var(--text-primary); padding: 3rem 1.5rem; }
+    .container { max-width: 1180px; margin: 0 auto; }
+    .macro { font-family:'Archivo Black', sans-serif; text-transform:uppercase; letter-spacing:-.05em; line-height:.86; font-size:clamp(2rem,9vw,7rem); margin:0 0 1rem; }
+    .phase-grid { display:grid; grid-template-columns: 180px 1fr; gap: 1rem; }
+    .label { font-family:'JetBrains Mono', monospace; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--accent-red); }
+    .checklist { list-style:none; padding:0; margin:0; }
+    .checklist li { border-bottom:1px solid rgba(5,5,5,.15); padding: .75rem 0; font-family:'JetBrains Mono', monospace; font-size:.84rem; line-height:1.7; }
+    .checklist li strong { display:block; font-family:'Archivo Black', sans-serif; text-transform:uppercase; font-size:1.05rem; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2px; background:var(--text-primary); border:2px solid var(--text-primary); }
+    .cards a { background:var(--bg-color); color:var(--text-primary); text-decoration:none; padding:1.2rem; }
+    .cards a:hover { background: var(--text-primary); color: var(--bg-color); }
+    .cards h3 { font-family:'Archivo Black', sans-serif; text-transform:uppercase; margin:0 0 .6rem; font-size:1.25rem; }
+    .cards p { font-family:'JetBrains Mono', monospace; font-size:.78rem; line-height:1.6; max-width:100%; margin:0; }
+    @media (max-width: 900px){ .phase-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <div class="mono" style="font-weight:700;">FOG LIFT KIT // WORKPLAN</div>
+    <nav>
+      <a href="../index.html">Ecosystem</a>
+      <a href="../transformby10x/diagnostic.html">TBTX Diagnostic</a>
+      <a href="../bizbuilders/index.html">BizBuilders AI</a>
+      <a href="../bizbotmarketing/index.html">BizBot Mrktng</a>
+      <a class="active" href="index.html">Fog Lift Kit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="label">[ BLUEPRINT → EXECUTION ]</div>
+        <h1 class="macro">Fog Lift Kit</h1>
+        <p class="mono" style="font-size:.9rem;line-height:1.8;max-width:70ch;">Use this as your practical plan while FLOW Agent AS is deployed and the brand sites continue shipping. This keeps progress moving instead of stalling after insight.</p>
+      </div>
+    </section>
+
+    <section class="phase" style="background:var(--text-primary);color:var(--bg-color);border-bottom-color:var(--accent-red);">
+      <div class="container phase-grid">
+        <div class="label" style="color:var(--accent-red);">PHASE_01<br>DEPLOY FLOW AGENT AS</div>
+        <ul class="checklist">
+          <li><strong>Bring up core stack</strong> Run docker compose for Portainer, Mercury 2, Agent Zero, Hermes, Redis, Postgres, BizBrain Lite, and Postiz.</li>
+          <li><strong>Validate health checks</strong> Confirm service health and reachable ports before task assignment.</li>
+          <li><strong>Assign first agent jobs</strong>Start with diagnostics synthesis, content ops, and deployment tracking tasks.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="phase">
+      <div class="container phase-grid">
+        <div class="label">PHASE_02<br>SHIP BRAND SITES</div>
+        <ul class="checklist">
+          <li><strong>TransformBy10X.ai</strong> Run TBTX diagnostic and publish Bridge into AI - Blueprint outputs with B2C/B2B mode support.</li>
+          <li><strong>BizBuilders AI</strong> Keep B2B infrastructure messaging, map business bottlenecks, and define first architecture wins.</li>
+          <li><strong>BizBot Mrktng</strong> Use the 15Q flow to identify marketing system gaps and hand off to Blueprint actions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="phase" style="background:var(--text-primary);color:var(--bg-color);">
+      <div class="container phase-grid">
+        <div class="label" style="color:var(--accent-red);">PHASE_03<br>COMPOUND WEEKLY</div>
+        <ul class="checklist">
+          <li><strong>Quad keystones review</strong> Re-score clarity, context, workflow spine, and leverage layer every week.</li>
+          <li><strong>Industry-aware tuning</strong> Adjust AI + tooling recommendations based on sector and operational constraints.</li>
+          <li><strong>Ship one improvement weekly</strong> Each week must produce one new automation, simplification, or architecture improvement.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="ecosystem">
+      <div class="container">
+        <div class="label">ECOSYSTEM LINKS</div>
+        <div class="cards">
+          <a href="../transformby10x/diagnostic.html"><h3>TBTX Diagnostic</h3><p>15 questions, profile mapping, and blueprint mode detection.</p></a>
+          <a href="../transformby10x/blueprint.html"><h3>Bridge into AI - Blueprint</h3><p>Industry-aware recommendations and first moves.</p></a>
+          <a href="../bizbuilders/index.html"><h3>BizBuilders AI</h3><p>B2B infrastructure framing and system architecture context.</p></a>
+          <a href="../bizbotmarketing/index.html"><h3>BizBot Mrktng</h3><p>B2B marketing diagnostic and blueprint handoff.</p></a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
